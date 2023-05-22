@@ -9,6 +9,8 @@ public class CharacterActor : MonoBehaviour
     private int currentHealth;
 
     [SerializeField] private int baseAttackPower = 10;
+
+    [SerializeField] private Queue<Vector3> pathQueue;
     #endregion Attributes
 
     // Start is called before the first frame update
@@ -25,18 +27,23 @@ public class CharacterActor : MonoBehaviour
 
     void InitializeAttributes() {
         currentHealth = health;
+        pathQueue = new Queue<Vector3>();
     }
 
-    void Damage(int damage) {
+    public void Damage(int damage) {
         currentHealth -= damage;
     }
 
-    void Restore(int health) {
+    public void Restore(int health) {
         currentHealth += health;
     }
 
-    void Attack(Transform target) {
+    public void Attack(Transform target) {
         CharacterActor actor = target.GetComponent<CharacterActor>();
         actor.Damage(baseAttackPower);
+    }
+
+    public void ClearPath() {
+        pathQueue.Clear();
     }
 }

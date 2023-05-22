@@ -883,6 +883,7 @@ GameObject:
   - component: {fileID: 963194228}
   - component: {fileID: 963194227}
   - component: {fileID: 963194229}
+  - component: {fileID: 963194230}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -961,6 +962,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attenuationObject: {fileID: 0}
+--- !u!114 &963194230
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963194225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95f4f9261d45f224a9bd3cede4cef8c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1202496776
 GameObject:
   m_ObjectHideFlags: 0
@@ -990,9 +1003,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 611c64348886c6843b2ec66f1d967e9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  activeCamera: {fileID: 0}
   battleState: 0
+  activeActor: {fileID: 0}
   actorList: []
   enemyList: []
+  actorSpawnPoints: []
+  enemySpawnPoints: []
+  switchToStartDelay: 0
+  battleStartAnimationDuration: 2
+  characterSelectTransitionDelay: 1
 --- !u!4 &1202496778
 Transform:
   m_ObjectHideFlags: 0
