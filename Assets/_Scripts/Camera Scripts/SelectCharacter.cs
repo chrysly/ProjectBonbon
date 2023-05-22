@@ -17,13 +17,19 @@ public class SelectCharacter : MonoBehaviour
                 Transform target = hit.transform;
                 if (target.gameObject.tag == "Character") {
                     if (selected != null) {
-                        selected.transform.GetChild(1).gameObject.SetActive(false);   
+                        selected.transform.GetChild(2).gameObject.SetActive(false);
+                        selected.transform.GetChild(1).GetChild(0).gameObject.SetActive(false);
+                        selected.transform.GetChild(1).GetChild(1).gameObject.SetActive(true);
                     }
                     selected = hit.transform.gameObject.GetComponent<CharacterActor>();
-                    selected.transform.GetChild(1).gameObject.SetActive(true);
+                    selected.transform.GetChild(2).gameObject.SetActive(true);
+                    selected.transform.GetChild(1).GetChild(0).gameObject.SetActive(true);
+                    selected.transform.GetChild(1).GetChild(1).gameObject.SetActive(false);
                 } else {
                     if (selected != null) {
-                        selected.transform.GetChild(1).gameObject.SetActive(false);   
+                        selected.transform.GetChild(2).gameObject.SetActive(false);   
+                        selected.transform.GetChild(1).GetChild(0).gameObject.SetActive(false);
+                        selected.transform.GetChild(1).GetChild(1).gameObject.SetActive(true);
                     }
                     selected = null;
                 }
