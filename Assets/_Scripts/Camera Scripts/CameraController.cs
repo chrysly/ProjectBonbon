@@ -3,32 +3,31 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
-using Unity.VisualScripting;
 
 public class CameraController : MonoBehaviour
 {
-    [SerializeField] private Transform character1;
-    [SerializeField] private Transform character2;
+    [SerializeField] private SelectCharacter selector;
 
-    private bool isOnChar1;
+    [SerializeField] private CinemachineVirtualCamera aerialCam;
+    [SerializeField] private CinemachineVirtualCamera charCam;
 
-    [SerializeField] private CinemachineVirtualCamera cam;
-    // Start is called before the first frame update
-    private void Start()
-    {
-        isOnChar1 = true;
+    private void Start() {
+        charCam.gameObject.SetActive(false);
+        aerialCam.gameObject.SetActive(true);
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space)) {
-            if (isOnChar1) {
-                cam.m_Follow = character2;
-                isOnChar1 = false;
+        if (selector.getSelected() != null) {
+            charCam.m_Follow = selector.getSelected().transform.GetChild(0);
+        }
+        if (Input.GetKeyDown(KeyCode.Tab)) {
+            if (aerialCam.isActiveAndEnabled) {
+                charCam.gameObject.SetActive(true);
+                aerialCam.gameObject.SetActive(false);
             } else {
-                cam.m_Follow = character1;
-                isOnChar1 = true;
+                aerialCam.gameObject.SetActive(true);
+                charCam.gameObject.SetActive(false);
             }
         }
     }
