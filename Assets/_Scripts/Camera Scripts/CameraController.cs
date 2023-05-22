@@ -12,8 +12,8 @@ public class CameraController : MonoBehaviour
     [SerializeField] private CinemachineVirtualCamera charCam;
 
     private void Start() {
-        charCam.gameObject.SetActive(false);
-        aerialCam.gameObject.SetActive(true);
+        charCam.gameObject.SetActive(true);
+        aerialCam.gameObject.SetActive(false);
     }
 
     void Update()

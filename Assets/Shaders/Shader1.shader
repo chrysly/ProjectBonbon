@@ -77,7 +77,7 @@ Shader "Unlit/Shader1"{
                 //return i.uv.y;
                 
                 float xOffset = cos(i.uv.x * TAU * 4) * 0.01;
-                float t = cos((i.uv.y + xOffset - _Time.y * .1f)* TAU * (5 * _ColorStart)) * 0.5 + 0.5;
+                float t = cos((i.uv.y + xOffset - _Time.y * .5f)* TAU * (5 * _ColorStart)) * .2 + 0.5;
                 t *= (1-i.uv.y);
 
                 float topBottomRemover = (abs(i.normal.y) < .999);
