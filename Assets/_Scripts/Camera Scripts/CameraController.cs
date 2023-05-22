@@ -19,7 +19,7 @@ public class CameraController : MonoBehaviour
     void Update()
     {
         if (selector.getSelected() != null) {
-            charCam.m_Follow = selector.getSelected().GetChild(0);
+            charCam.m_Follow = selector.getSelected().transform.GetChild(0);
         }
         if (Input.GetKeyDown(KeyCode.Tab)) {
             if (aerialCam.isActiveAndEnabled) {
