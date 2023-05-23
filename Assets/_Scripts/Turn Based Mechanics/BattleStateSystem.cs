@@ -7,7 +7,8 @@ public enum BattleState { START, CHARSELECT, PATHSELECT, ENEMYTURN, WIN, LOSE }
 public class BattleStateSystem : MonoBehaviour
 {
 
-    [SerializeField] private Transform activeCamera;
+    [SerializeField] private Transform selectorSource;
+    [SerializeField] private Transform pathSource;
     private SelectCharacter selector;
     private CharacterPathHandler pathHandler;
 
@@ -22,8 +23,8 @@ public class BattleStateSystem : MonoBehaviour
     #endregion Battle Actors
 
     #region Battle Event Timing
-    [SerializeField] private float switchToStartDelay = 2f;
-    [SerializeField] private float battleStartAnimationDuration = 2f;
+    [SerializeField] private float switchToStartDelay = 1f;
+    [SerializeField] private float battleStartAnimationDuration = 0.5f;
     [SerializeField] private float characterSelectTransitionDelay = 1f;
     #endregion Battle Event Timing
 
@@ -37,14 +38,14 @@ public class BattleStateSystem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        HandleState();
         UpdateActiveCharacter();
+        HandleState();
     }
 
     private void HandleState() {
         switch (battleState) {
             case BattleState.START:
-                BattleStart();
+                StartCoroutine(BattleStart());
                 break;
             case BattleState.CHARSELECT:
                 CharacterSelection();
@@ -57,8 +58,8 @@ public class BattleStateSystem : MonoBehaviour
 
     private IEnumerator InitializeBattle() {
 
-        selector = activeCamera.GetComponent<SelectCharacter>();
-        pathHandler = selector.GetComponent<CharacterPathHandler>();
+        selector = selectorSource.GetComponent<SelectCharacter>();
+        pathHandler = pathSource.GetComponent<CharacterPathHandler>();
 
         //TODO: Initialize actors at actor spawn points
         yield return new WaitForSeconds(switchToStartDelay);
@@ -69,6 +70,7 @@ public class BattleStateSystem : MonoBehaviour
     #region Game States
     private void SwitchToStart() {
         battleState = BattleState.START;
+        Debug.Log("Switching to START");
     }
 
     private IEnumerator BattleStart() {
@@ -81,13 +83,15 @@ public class BattleStateSystem : MonoBehaviour
     private void SwitchToCharacterSelect() {
         activeActor = null;
         battleState = BattleState.CHARSELECT;
+        pathHandler.DisableWaypoints();
+        Debug.Log("Switching to CHARSELECT");
     }
 
     private void CharacterSelection() {
         //something here
 
         if (activeActor != null) {
-            SwitchToCharacterSelect();
+            SwitchToPathSelect();
         }
     }
 
@@ -97,6 +101,7 @@ public class BattleStateSystem : MonoBehaviour
 
     private void SwitchToPathSelect() {
         battleState = BattleState.PATHSELECT;
+        Debug.Log("Switching to PATHSELECT");
     }
 
     private void PathSelect() {
@@ -104,6 +109,8 @@ public class BattleStateSystem : MonoBehaviour
         if (activeActor == null) {
             SwitchToCharacterSelect();
         }
+
+        pathHandler.DisplayWaypoints(activeActor);
 
         if (Input.GetMouseButtonDown(0)) {
             pathHandler.AddWaypoint(activeActor);
