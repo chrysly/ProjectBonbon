@@ -18,6 +18,7 @@ public class CharacterPathHandler : MonoBehaviour
 
     public void AddWaypoint(CharacterActor actor) {
         if (actor.path.Count <= maxWaypoints) {
+            Debug.Log("Added");
             RaycastHit hit;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out hit, 100)) {
@@ -36,7 +37,6 @@ public class CharacterPathHandler : MonoBehaviour
     private IEnumerator WaypointOperation(CharacterActor actor, Vector3 cursorPosition) {
         if (actor != null) {
             actor.path.AddLast(cursorPosition);
-            waypointsContainer.GetChild(actor.path.Count).gameObject.SetActive(true);
 
             yield return new WaitForSecondsRealtime(waypointCreationDelay);
 
@@ -58,7 +58,7 @@ public class CharacterPathHandler : MonoBehaviour
         if (actor != null) {
             if (actor.path.Count > 0) {
                 actor.path.RemoveLast();
-                waypointsContainer.GetChild(actor.path.Count - 1).gameObject.SetActive(false);
+                waypointsContainer.GetChild(actor.path.Count).gameObject.SetActive(false);
 
                 yield return new WaitForSecondsRealtime(waypointCreationDelay);
 
@@ -72,7 +72,9 @@ public class CharacterPathHandler : MonoBehaviour
         if (actor.path.Count > 0) {
             int index = 0;
             for (LinkedListNode<Vector3> node = actor.path.First; node != null; node = node.Next, index++) {
+                Debug.Log(index);
                 waypointsContainer.GetChild(index).position = node.Value;
+                waypointsContainer.GetChild(index).gameObject.SetActive(true);
             }
         }
     }
