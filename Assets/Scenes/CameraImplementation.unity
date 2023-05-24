@@ -4091,6 +4091,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selected: {fileID: 0}
+  cam: {fileID: 491098462}
+  healthbars:
+  - {fileID: 1502611748}
+  - {fileID: 2006718049}
 --- !u!4 &1749257114
 Transform:
   m_ObjectHideFlags: 0
