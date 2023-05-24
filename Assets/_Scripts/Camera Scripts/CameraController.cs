@@ -7,9 +7,10 @@ using Cinemachine;
 public class CameraController : MonoBehaviour
 {
     [SerializeField] private SelectCharacter selector;
-
+    
     [SerializeField] private CinemachineVirtualCamera aerialCam;
     [SerializeField] private CinemachineVirtualCamera charCam;
+    
 
     private void Start() {
         charCam.gameObject.SetActive(true);
@@ -23,12 +24,21 @@ public class CameraController : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Tab)) {
             if (aerialCam.isActiveAndEnabled) {
+                selector.showHealthbars();
                 charCam.gameObject.SetActive(true);
                 aerialCam.gameObject.SetActive(false);
             } else {
+                if (selector.getSelected() != null) {
+                    selector.deselectUI();   
+                }
+                selector.hideHealthbars();
                 aerialCam.gameObject.SetActive(true);
                 charCam.gameObject.SetActive(false);
             }
         }
+    }
+    
+    public bool getIsCharCam() {
+        return charCam.isActiveAndEnabled;
     }
 }
