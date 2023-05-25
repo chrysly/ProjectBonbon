@@ -33,7 +33,8 @@ public class CameraController : MonoBehaviour
                 AerialUI.SetActive(false);
             } else {
                 if (selector.getSelected() != null) {
-                    selector.deselectUI();   
+                    selector.deselectUI();
+                    selector.StartCoroutine(selector.setSelected(null));
                 }
                 selector.hideHealthbars();
                 AerialUI.SetActive(true);
