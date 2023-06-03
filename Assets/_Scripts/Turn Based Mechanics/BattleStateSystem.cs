@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum BattleState { START, CHARSELECT, PATHSELECT, ENEMYTURN, WIN, LOSE }
+public enum BattleState { START, CHARSELECT, PATHSELECT, ANIMATE, WIN, LOSE }
 
 public class BattleStateSystem : MonoBehaviour
 {
@@ -117,6 +117,12 @@ public class BattleStateSystem : MonoBehaviour
         } else if (Input.GetMouseButtonUp(1)) {
             pathHandler.UndoWaypoint(activeActor);
         }
+    }
+
+    public void SwitchToAnimate() {
+        activeActor = null;
+        battleState = BattleState.ANIMATE;
+        pathHandler.DisableWaypoints();
     }
 
     #endregion Game States

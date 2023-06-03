@@ -36,6 +36,7 @@ public class CharacterPathHandler : MonoBehaviour
 
     private IEnumerator WaypointOperation(CharacterActor actor, Vector3 cursorPosition) {
         if (actor != null) {
+            cursorPosition.y += 1;
             actor.path.AddLast(cursorPosition);
 
             yield return new WaitForSecondsRealtime(waypointCreationDelay);
