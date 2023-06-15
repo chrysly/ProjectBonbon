@@ -46,7 +46,7 @@ public class SelectCharacter : MonoBehaviour
                                 temp.transform.GetChild(1).GetChild(1).gameObject.SetActive(false);
                                 FunctionTimer.Create(deselectUI, .05f);
                                 StartCoroutine(setSelected(temp));
-                                FunctionTimer.Create(selectUI, 1.25f);
+                                FunctionTimer.Create(selectUI, 0.5f);
                             }   
                         } else {
                             if (selected == temp) {
@@ -129,5 +129,9 @@ public class SelectCharacter : MonoBehaviour
     public IEnumerator setSelected(CharacterActor selected) {
         yield return new WaitForSeconds(.05f);
         this.selected = selected;
+    }
+    
+    public void setFadeOut(bool fadeOut) {
+        this.fadeOut = fadeOut;
     }
 }
