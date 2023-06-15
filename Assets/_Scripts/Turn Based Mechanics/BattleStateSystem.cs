@@ -2,15 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum BattleState { START, CHARSELECT, PATHSELECT, ANIMATE, WIN, LOSE }
+public enum BattleState { START, CHARSELECT, PATHSELECT, SKILLSELECT, ANIMATE, WIN, LOSE }
 
 public class BattleStateSystem : MonoBehaviour
 {
 
     [SerializeField] private Transform selectorSource;
     [SerializeField] private Transform pathSource;
+    [SerializeField] private Transform disablerSource;
+    [SerializeField] private Transform animatorSource;
     private SelectCharacter selector;
     private CharacterPathHandler pathHandler;
+    private ControllerDisabler disabler;
+    private ActorMovementHandler animator;
 
     public BattleState battleState;
 
@@ -53,6 +57,12 @@ public class BattleStateSystem : MonoBehaviour
             case BattleState.PATHSELECT:
                 PathSelect();
                 break;
+            case BattleState.SKILLSELECT:
+                SkillSelect();
+                break;
+            case BattleState.ANIMATE:
+                StartCoroutine(AnimateBattle());
+                break;
         }
     }
 
@@ -60,6 +70,8 @@ public class BattleStateSystem : MonoBehaviour
 
         selector = selectorSource.GetComponent<SelectCharacter>();
         pathHandler = pathSource.GetComponent<CharacterPathHandler>();
+        disabler = disablerSource.GetComponent<ControllerDisabler>();
+        animator = animatorSource.GetComponent<ActorMovementHandler>();
 
         //TODO: Initialize actors at actor spawn points
         yield return new WaitForSeconds(switchToStartDelay);
@@ -83,7 +95,8 @@ public class BattleStateSystem : MonoBehaviour
     private void SwitchToCharacterSelect() {
         activeActor = null;
         battleState = BattleState.CHARSELECT;
-        pathHandler.DisableWaypoints();
+        //pathHandler.DisableWaypoints();
+        disabler.EnableControllers();
         Debug.Log("Switching to CHARSELECT");
     }
 
@@ -110,7 +123,7 @@ public class BattleStateSystem : MonoBehaviour
             SwitchToCharacterSelect();
         }
 
-        pathHandler.DisplayWaypoints(activeActor);
+        //pathHandler.DisplayWaypoints(activeActor);
 
         if (Input.GetMouseButtonDown(0)) {
             pathHandler.AddWaypoint(activeActor);
@@ -119,10 +132,36 @@ public class BattleStateSystem : MonoBehaviour
         }
     }
 
+    private void SwitchToSkillSelect() {
+        battleState = BattleState.SKILLSELECT;
+        Debug.Log("Switching to SKILLSELECT");
+    }
+
+    private void SkillSelect() {
+
+        if (activeActor == null) {
+            SwitchToCharacterSelect();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            SwitchToCharacterSelect();
+        }
+    }
+
     public void SwitchToAnimate() {
         activeActor = null;
         battleState = BattleState.ANIMATE;
-        pathHandler.DisableWaypoints();
+        //pathHandler.DisableWaypoints();
+        disabler.DisableControllers();
+    }
+
+    private IEnumerator AnimateBattle() {
+        //additional actions during animate state
+        animator.RunAllMoveSequences();
+
+        yield return new WaitForSeconds(animator.getDelay());
+
+        SwitchToCharacterSelect();
     }
 
     #endregion Game States
