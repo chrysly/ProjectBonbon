@@ -42,9 +42,11 @@ public class SelectCharacter : MonoBehaviour
                                 FunctionTimer.Create(deselectUI, .1f);
                             } else {
                                 fadeOut = true;
+                                temp.transform.GetChild(2).gameObject.SetActive(true);
+                                temp.transform.GetChild(1).GetChild(1).gameObject.SetActive(false);
                                 FunctionTimer.Create(deselectUI, .05f);
                                 StartCoroutine(setSelected(temp));
-                                FunctionTimer.Create(selectUI, 1.25f);
+                                FunctionTimer.Create(selectUI, 0.5f);
                             }   
                         } else {
                             if (selected == temp) {
@@ -73,8 +75,8 @@ public class SelectCharacter : MonoBehaviour
         if (fadeOut) {
             CanvasGroup canvas = selected.transform.GetChild(1).GetChild(0).gameObject.GetComponent<CanvasGroup>();
             if (canvas.alpha > 0) {
-                canvas.alpha -= Time.deltaTime * 8;
-                if (canvas.alpha <= 10) {
+                canvas.alpha -= Time.deltaTime * 10;
+                if (canvas.alpha <= 20) {
                     canvas.alpha = 0;
                     fadeOut = false;
                 }
@@ -87,7 +89,7 @@ public class SelectCharacter : MonoBehaviour
     void selectUI() {
         selectCharacter();
         showUI();
-        selected.transform.GetChild(1).GetChild(1).gameObject.SetActive(false);
+        deselectHealthbar();
     }
     void deselectCharacter() {
         selected.transform.GetChild(2).gameObject.SetActive(false);
@@ -95,7 +97,7 @@ public class SelectCharacter : MonoBehaviour
     public void deselectUI() {
         hideUI();
         deselectCharacter();
-        selected.transform.GetChild(1).GetChild(1).gameObject.SetActive(true);
+        selectHealthbar();
         fadeOut = false;
         selected = null;
     }
@@ -104,6 +106,12 @@ public class SelectCharacter : MonoBehaviour
     }
     void hideUI() {
         fadeOut = true;
+    }
+    void selectHealthbar() {
+        selected.transform.GetChild(1).GetChild(1).gameObject.SetActive(true);
+    }
+    void deselectHealthbar() {
+        selected.transform.GetChild(1).GetChild(1).gameObject.SetActive(false);
     }
     public void showHealthbars() {
         foreach (GameObject healthbar in healthbars) {
@@ -119,7 +127,11 @@ public class SelectCharacter : MonoBehaviour
         return selected;
     }
     public IEnumerator setSelected(CharacterActor selected) {
-        yield return new WaitForSeconds(.1f);
+        yield return new WaitForSeconds(.05f);
         this.selected = selected;
+    }
+    
+    public void setFadeOut(bool fadeOut) {
+        this.fadeOut = fadeOut;
     }
 }

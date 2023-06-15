@@ -33,10 +33,11 @@ public class CameraController : MonoBehaviour
                 AerialUI.SetActive(false);
             } else {
                 if (selector.getSelected() != null) {
-                    selector.deselectUI();
+                    selector.setFadeOut(true);
+                    FunctionTimer.Create(selector.deselectUI, .02f);
                     selector.StartCoroutine(selector.setSelected(null));
                 }
-                selector.hideHealthbars();
+                FunctionTimer.Create(selector.hideHealthbars, .03f);
                 AerialUI.SetActive(true);
                 aerialCam.gameObject.SetActive(true);
                 charCam.gameObject.SetActive(false);
