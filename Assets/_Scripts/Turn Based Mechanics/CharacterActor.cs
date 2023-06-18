@@ -9,6 +9,7 @@ public class CharacterActor : MonoBehaviour
     [SerializeField] private int health = 100;
     [SerializeField] private int maxActionPoints = 3;
     [SerializeField] private float durationBetweenWaypoints = 2f;
+    [SerializeField] private List<SkillObject> skillList;
 
     //consumed when using attacks or moving
     private int actionPoints;
@@ -47,7 +48,7 @@ public class CharacterActor : MonoBehaviour
             ConsumeActionPoints(action.GetCost());
             if (action.GetCost() > 1) {
                 for (int i = 0; i < action.GetCost() - 1; i++) {
-                    actionList.AddLast(gameObject.AddComponent<InactiveAction>());
+                    actionList.AddLast(new InactiveAction());
                 }
             }
         }
@@ -97,5 +98,9 @@ public class CharacterActor : MonoBehaviour
 
     public void ResetActionPoints() {
         actionPoints = maxActionPoints;
+    }
+
+    public List<SkillObject> GetSkillList() {
+        return skillList;
     }
 }

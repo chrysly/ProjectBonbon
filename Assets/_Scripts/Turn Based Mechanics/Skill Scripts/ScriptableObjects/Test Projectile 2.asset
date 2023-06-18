@@ -10,12 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7260fc2f7faab714dbcc1ef23a6146bd, type: 3}
-  m_Name: Default Single Target Projectile
+  m_Name: Test Projectile 2
   m_EditorClassIdentifier: 
   skillID: 0
-  skillName: Projectile
+  skillName: Test 2
   skillType: 0
   rawDamage: 10
   baseSpeed: 1
   lifetime: 0
-  cursorPrefab: {fileID: 6377454362745107474, guid: 054d1e739df444b45b497f7abea12974, type: 3}

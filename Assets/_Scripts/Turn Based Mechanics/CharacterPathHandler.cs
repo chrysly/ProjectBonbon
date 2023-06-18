@@ -36,7 +36,7 @@ public class CharacterPathHandler : MonoBehaviour
     private IEnumerator WaypointOperation(CharacterActor actor, Vector3 cursorPosition) {
         if (actor != null) {
             cursorPosition.y += 1;  //offset
-            MoveAction waypoint = gameObject.AddComponent<MoveAction>();
+            MoveAction waypoint = new();
             waypoint.StoreLocation(cursorPosition);
             actor.AppendAction(waypoint);
 

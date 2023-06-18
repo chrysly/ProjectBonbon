@@ -2,13 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SkillAction : MonoBehaviour, ActorAction
+public class SkillAction : ActorAction
 {
-    [SerializeField] private int cost = 2;
-    [SerializeField] private CursorType cursor;
+    [SerializeField] private SkillObject skill;
 
-    public void StoreCursor(CursorType cursor) {
-        this.cursor = cursor;
+    public SkillAction(SkillObject skill) {
+        this.skill = skill;
     }
 
     public void RunAction(Transform actor, float duration) {
@@ -16,6 +15,6 @@ public class SkillAction : MonoBehaviour, ActorAction
     }
 
     public int GetCost() {
-        return cost;
+        return skill.GetCost();
     }
 }

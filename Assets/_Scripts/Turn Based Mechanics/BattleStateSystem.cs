@@ -7,14 +7,11 @@ public enum BattleState { START, CHARSELECT, PATHSELECT, SKILLSELECT, ANIMATE, W
 public class BattleStateSystem : MonoBehaviour
 {
 
-    [SerializeField] private Transform selectorSource;
-    [SerializeField] private Transform pathSource;
-    [SerializeField] private Transform disablerSource;
-    [SerializeField] private Transform animatorSource;
-    private SelectCharacter selector;
-    private CharacterPathHandler pathHandler;
-    private ControllerDisabler disabler;
-    private ActorMovementHandler animator;
+    [SerializeField] private SelectCharacter selector;
+    [SerializeField] private CharacterPathHandler pathHandler;
+    [SerializeField] private ControllerDisabler disabler;
+    [SerializeField] private ActorMovementHandler animator;
+    [SerializeField] private CursorManager cursorManager;
 
     public BattleState battleState;
 
@@ -31,6 +28,13 @@ public class BattleStateSystem : MonoBehaviour
     [SerializeField] private float battleStartAnimationDuration = 0.5f;
     [SerializeField] private float characterSelectTransitionDelay = 1f;
     #endregion Battle Event Timing
+
+    #region Events
+    public delegate void SkillConfirm();
+    public event SkillConfirm OnSkillConfirm;
+    #endregion Events
+
+    private SkillObject activeSkill;
 
     // Start is called before the first frame update
     void Start()
@@ -68,11 +72,6 @@ public class BattleStateSystem : MonoBehaviour
 
     private IEnumerator InitializeBattle() {
 
-        selector = selectorSource.GetComponent<SelectCharacter>();
-        pathHandler = pathSource.GetComponent<CharacterPathHandler>();
-        disabler = disablerSource.GetComponent<ControllerDisabler>();
-        animator = animatorSource.GetComponent<ActorMovementHandler>();
-
         //TODO: Initialize actors at actor spawn points
         yield return new WaitForSeconds(switchToStartDelay);
 
@@ -92,7 +91,7 @@ public class BattleStateSystem : MonoBehaviour
         SwitchToCharacterSelect();
     }
 
-    private void SwitchToCharacterSelect() {
+    public void SwitchToCharacterSelect() {
         activeActor = null;
         battleState = BattleState.CHARSELECT;
         //pathHandler.DisableWaypoints();
@@ -112,7 +111,7 @@ public class BattleStateSystem : MonoBehaviour
         activeActor = selector.getSelected();
     }
 
-    private void SwitchToPathSelect() {
+    public void SwitchToPathSelect() {
         battleState = BattleState.PATHSELECT;
         Debug.Log("Switching to PATHSELECT");
     }
@@ -132,19 +131,36 @@ public class BattleStateSystem : MonoBehaviour
         }
     }
 
-    private void SwitchToSkillSelect() {
+    public void SwitchToSkillSelect(SkillObject skill) {
         battleState = BattleState.SKILLSELECT;
-        Debug.Log("Switching to SKILLSELECT");
+        activeSkill = skill;
+        activeSkill.InitSkillDisplay(cursorManager);
+        Debug.Log("Switching to SKILLSELECT: " + skill.GetSkillName());
     }
 
     private void SkillSelect() {
 
         if (activeActor == null) {
             SwitchToCharacterSelect();
+            activeSkill.DisableSkillDisplay(cursorManager);
+            activeSkill = null;
         }
 
         if (Input.GetKeyDown(KeyCode.Escape)) {
+            activeSkill = null;
             SwitchToCharacterSelect();
+            activeSkill.DisableSkillDisplay(cursorManager);
+        }
+
+        activeSkill.RunSkillDisplay(cursorManager, activeActor.transform);
+
+        if (Input.GetMouseButtonDown(0)) {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out RaycastHit hit, 100)) {
+                OnSkillConfirm?.Invoke();
+                SwitchToPathSelect();
+                activeActor.AppendAction(activeSkill.GenerateSkillAction());
+            }
         }
     }
 

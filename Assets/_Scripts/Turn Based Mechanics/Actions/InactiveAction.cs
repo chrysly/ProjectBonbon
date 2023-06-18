@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InactiveAction : MonoBehaviour, ActorAction
+public class InactiveAction : ActorAction
 {
     [SerializeField] private int cost = 1;
 
