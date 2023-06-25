@@ -16,6 +16,10 @@ public class MoveAction : ActorAction
         actor.DOMove(location, duration);
     }
 
+    public void DisplayPreview() {
+
+    }
+
     public int GetCost() {
         return cost;
     }

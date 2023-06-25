@@ -27,12 +27,16 @@ public class SkillWindow : MonoBehaviour
         skills = new List<SkillObject>(actor.GetSkillList());
         transform.GetComponent<ScrollRect>().verticalNormalizedPosition = 1f;
         LoadButtons();
+        battleState.OnSkillConfirm += DisplayOnConfirm;
     }
 
     public void Display() {
         gameObject.SetActive(true);
-
         transform.DOScaleY(1, expandDuration);
+    }
+
+    private void DisplayOnConfirm(bool canceled) {
+        panel.alpha = 1;
     }
 
     public void Hide() {

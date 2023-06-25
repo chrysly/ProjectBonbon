@@ -16,14 +16,16 @@ public class CharacterPathHandler : MonoBehaviour
 
     }
 
-    public void AddWaypoint(CharacterActor actor) {
+    public Vector3 AddWaypoint(CharacterActor actor) {
         if (actor.HasRemainingActionPoints()) {
             Debug.Log("Added");
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out RaycastHit hit, 100)) {
                 WaypointAction(actor, hit.point);
+                return hit.point;
             }
         }
+        return Vector3.zero;
     }
 
     public void WaypointAction(CharacterActor actor, Vector3 cursorPosition) {

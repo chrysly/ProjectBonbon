@@ -30,11 +30,17 @@ public class BattleStateSystem : MonoBehaviour
     #endregion Battle Event Timing
 
     #region Events
-    public delegate void SkillConfirm();
+    public delegate void SkillSelected(SkillAction action, CharacterActor actor);
+    public event SkillSelected OnSkillSelected;
+
+    public delegate void SkillConfirm(bool canceled);
     public event SkillConfirm OnSkillConfirm;
+
+    public delegate void WaypointAdded(Vector3 location, CharacterActor actor);
+    public event WaypointAdded OnWaypointAdded;
     #endregion Events
 
-    private SkillObject activeSkill;
+    private SkillAction activeSkill;
 
     // Start is called before the first frame update
     void Start()
@@ -97,6 +103,8 @@ public class BattleStateSystem : MonoBehaviour
         //pathHandler.DisableWaypoints();
         disabler.EnableControllers();
         Debug.Log("Switching to CHARSELECT");
+
+        //EVENTS
     }
 
     private void CharacterSelection() {
@@ -123,9 +131,12 @@ public class BattleStateSystem : MonoBehaviour
         }
 
         //pathHandler.DisplayWaypoints(activeActor);
-
-        if (Input.GetMouseButtonDown(0)) {
-            pathHandler.AddWaypoint(activeActor);
+        //TODO: Invoke OnActionUpdate
+        if (Input.GetMouseButtonDown(0) && Input.GetKey(KeyCode.LeftShift)) {
+            Vector3 waypoint = pathHandler.AddWaypoint(activeActor);
+            if (waypoint != Vector3.zero) {
+                OnWaypointAdded?.Invoke(waypoint, activeActor);
+            }
         } else if (Input.GetMouseButtonUp(1)) {
             pathHandler.UndoWaypoint(activeActor);
         }
@@ -133,8 +144,8 @@ public class BattleStateSystem : MonoBehaviour
 
     public void SwitchToSkillSelect(SkillObject skill) {
         battleState = BattleState.SKILLSELECT;
-        activeSkill = skill;
-        activeSkill.InitSkillDisplay(cursorManager);
+        activeSkill = new SkillAction(skill);
+        OnSkillSelected?.Invoke(activeSkill, activeActor);
         Debug.Log("Switching to SKILLSELECT: " + skill.GetSkillName());
     }
 
@@ -142,24 +153,23 @@ public class BattleStateSystem : MonoBehaviour
 
         if (activeActor == null) {
             SwitchToCharacterSelect();
-            activeSkill.DisableSkillDisplay(cursorManager);
             activeSkill = null;
+            OnSkillConfirm?.Invoke(true);
         }
 
         if (Input.GetKeyDown(KeyCode.Escape)) {
             activeSkill = null;
             SwitchToCharacterSelect();
-            activeSkill.DisableSkillDisplay(cursorManager);
+            OnSkillConfirm?.Invoke(true);
         }
 
-        activeSkill.RunSkillDisplay(cursorManager, activeActor.transform);
 
         if (Input.GetMouseButtonDown(0)) {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out RaycastHit hit, 100)) {
-                OnSkillConfirm?.Invoke();
                 SwitchToPathSelect();
-                activeActor.AppendAction(activeSkill.GenerateSkillAction());
+                OnSkillConfirm?.Invoke(false);
+                activeSkill.StoreLocation(hit.point);
             }
         }
     }

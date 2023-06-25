@@ -10,6 +10,10 @@ public class InactiveAction : ActorAction
         //Action when actor is inactive
     }
 
+    public void DisplayPreview() {
+
+    }
+
     public int GetCost() {
         return cost;
     }

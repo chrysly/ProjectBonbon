@@ -100,6 +100,10 @@ public class CharacterActor : MonoBehaviour
         actionPoints = maxActionPoints;
     }
 
+    public LinkedList<ActorAction> GetActionList() {
+        return actionList;
+    }
+
     public List<SkillObject> GetSkillList() {
         return skillList;
     }

@@ -6,6 +6,7 @@ public enum SkillType { OFFENSIVE, SUPPORT, OTHER };
 
 public abstract class SkillObject : ScriptableObject {
 
+    [Header("Universal Skill Traits")]
     [Tooltip("The string ID of the skill. See drive for naming conventions.")]
     [SerializeField] private int skillID = 0;
 
@@ -18,25 +19,23 @@ public abstract class SkillObject : ScriptableObject {
     [Tooltip("The action point cost of the skill. Should not exceed max action turns.")]
     [SerializeField] private int cost = 1;
 
+    [Header("Display")]
+    [Tooltip("Cursor prefab to display when skill is part of active path.")]
+    [SerializeField] private GameObject activePrefab;
+    [Tooltip("Cursor material to display when skill is part of preview path.")]
+    [SerializeField] private Material previewMaterial;
+
     private CursorType cursor;
 
-    public abstract void InitSkillDisplay(CursorManager cursorManager);
-    public void RunSkillDisplay(CursorManager cursorManager, Transform actor) {
-        cursorManager.DrawCursor(actor);
-    }
-    public void DisableSkillDisplay(CursorManager cursorManager) {
-        cursorManager.DeleteCursor();
-    }
-
-    public virtual SkillAction GenerateSkillAction() {
-        SkillAction skillAction = new(this);
-        return skillAction;
-    }
+    public abstract void InitSkillDisplay(ActionDisplay display);
 
     public int GetSkillID() { return skillID; }
     public string GetSkillName() { return skillName; }
     public SkillType GetSkillType() { return skillType; }
     public CursorType GetCursorType() { return cursor; }
+
+    public GameObject GetActivePrefab() { return activePrefab; }
+    public Material GetPreviewPrefab() { return previewMaterial; }
 
     public int GetCost() { return cost; }
 }

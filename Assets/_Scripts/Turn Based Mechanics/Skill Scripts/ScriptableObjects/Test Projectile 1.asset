@@ -15,6 +15,11 @@ MonoBehaviour:
   skillID: 0
   skillName: Test 1
   skillType: 0
+  cost: 1
+  activePrefab: {fileID: 0}
+  previewMaterial: {fileID: 0}
   rawDamage: 10
   baseSpeed: 1
   lifetime: 0
+  cursorPrefab: {fileID: 6377454362745107474, guid: 054d1e739df444b45b497f7abea12974, type: 3}
+  linePrefab: {fileID: 792442966114428294, guid: d63e3325e5d35344890aedf32d0b73ee, type: 3}
