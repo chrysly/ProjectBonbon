@@ -6,25 +6,26 @@ public class CharacterPathHandler : MonoBehaviour
 {
     private IEnumerator activeAction;
 
-    [SerializeField] private Transform waypointsContainer;
-    private int maxWaypoints;
+    [SerializeField] private Transform waypointMoveContainer;
+    [SerializeField] private Transform waypointSkillContainer;
 
     [SerializeField] private float waypointCreationDelay = 0.5f; 
 
     void Start()
     {
-        maxWaypoints = waypointsContainer.childCount;
+
     }
 
-    public void AddWaypoint(CharacterActor actor) {
-        if (actor.path.Count <= maxWaypoints) {
+    public Vector3 AddWaypoint(CharacterActor actor) {
+        if (actor.HasRemainingActionPoints()) {
             Debug.Log("Added");
-            RaycastHit hit;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out hit, 100)) {
+            if (Physics.Raycast(ray, out RaycastHit hit, 100)) {
                 WaypointAction(actor, hit.point);
+                return hit.point;
             }
         }
+        return Vector3.zero;
     }
 
     public void WaypointAction(CharacterActor actor, Vector3 cursorPosition) {
@@ -36,8 +37,10 @@ public class CharacterPathHandler : MonoBehaviour
 
     private IEnumerator WaypointOperation(CharacterActor actor, Vector3 cursorPosition) {
         if (actor != null) {
-            cursorPosition.y += 1;
-            actor.path.AddLast(cursorPosition);
+            cursorPosition.y += 1;  //offset
+            MoveAction waypoint = new();
+            waypoint.StoreLocation(cursorPosition);
+            actor.AppendAction(waypoint);
 
             yield return new WaitForSecondsRealtime(waypointCreationDelay);
 
@@ -57,9 +60,8 @@ public class CharacterPathHandler : MonoBehaviour
 
     private IEnumerator UndoWaypointOperation(CharacterActor actor) {
         if (actor != null) {
-            if (actor.path.Count > 0) {
-                actor.path.RemoveLast();
-                waypointsContainer.GetChild(actor.path.Count).gameObject.SetActive(false);
+            if (!actor.ActionQueueIsEmpty()) {
+                actor.UndoLastAction();
 
                 yield return new WaitForSecondsRealtime(waypointCreationDelay);
 
@@ -69,6 +71,7 @@ public class CharacterPathHandler : MonoBehaviour
         }
     }
 
+    /*
     public void DisplayWaypoints(CharacterActor actor) {
         if (actor.path.Count > 0) {
             int index = 0;
@@ -86,4 +89,5 @@ public class CharacterPathHandler : MonoBehaviour
             waypointsContainer.GetChild(i).gameObject.SetActive(false);
         }
     }
+    */
 }
