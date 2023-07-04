@@ -7,20 +7,26 @@ public enum BattleState { START, CHARSELECT, PATHSELECT, SKILLSELECT, ANIMATE, W
 public class BattleStateSystem : MonoBehaviour
 {
 
-    [SerializeField] private SelectCharacter selector;
+    [SerializeField] private SelectManager selector;
     [SerializeField] private CharacterPathHandler pathHandler;
     [SerializeField] private ControllerDisabler disabler;
     [SerializeField] private ActorMovementHandler animator;
     [SerializeField] private CursorManager cursorManager;
+
+    private IEnumerator activeAnimationCycle;
+    private int maxSteps;
+    private int animationStep; 
 
     public BattleState battleState;
 
     #region Battle Actors
     [SerializeField] private List<CharacterActor> actorList;
     [SerializeField] private List<EnemyActor> enemyList;
-    [SerializeField] private List<Transform> actorSpawnPoints;
-    [SerializeField] private List<Transform> enemySpawnPoints;
-    private CharacterActor activeActor;
+    private CharacterActor activeActor = null;
+    private List<CharacterActor> actorQueue;
+
+    [SerializeField] private float animationCycleDuration = 0.5f;
+
     #endregion Battle Actors
 
     #region Battle Event Timing
@@ -38,6 +44,12 @@ public class BattleStateSystem : MonoBehaviour
 
     public delegate void WaypointAdded(Vector3 location, CharacterActor actor);
     public event WaypointAdded OnWaypointAdded;
+
+    public delegate void UndoAction();
+    public event UndoAction OnUndoAction;
+
+    public delegate void Selection(bool enable);
+    public event Selection OnSwitchState;
     #endregion Events
 
     private SkillAction activeSkill;
@@ -46,13 +58,14 @@ public class BattleStateSystem : MonoBehaviour
     void Start()
     {
         battleState = BattleState.START;
+        selector.OnSelect += SwitchToPathSelect;
+        selector.OnDeselect += SwitchToCharacterSelect;
         StartCoroutine(InitializeBattle());
     }
 
     // Update is called once per frame
     void Update()
     {
-        UpdateActiveCharacter();
         HandleState();
     }
 
@@ -71,17 +84,25 @@ public class BattleStateSystem : MonoBehaviour
                 SkillSelect();
                 break;
             case BattleState.ANIMATE:
-                StartCoroutine(AnimateBattle());
+                Animate();
                 break;
         }
     }
 
     private IEnumerator InitializeBattle() {
 
+        maxSteps = actorList.Count;
+        animationStep = 0;
+
+        actorQueue = new List<CharacterActor>(actorList);
+        actorQueue.Sort();
+
         //TODO: Initialize actors at actor spawn points
         yield return new WaitForSeconds(switchToStartDelay);
 
         SwitchToStart();
+
+        yield return null;
     }
 
     #region Game States
@@ -95,32 +116,30 @@ public class BattleStateSystem : MonoBehaviour
         yield return new WaitForSeconds(battleStartAnimationDuration);
 
         SwitchToCharacterSelect();
+
+        yield return null;
     }
 
     public void SwitchToCharacterSelect() {
-        activeActor = null;
-        battleState = BattleState.CHARSELECT;
-        //pathHandler.DisableWaypoints();
-        disabler.EnableControllers();
-        Debug.Log("Switching to CHARSELECT");
+        if (battleState != BattleState.ANIMATE) {
+            battleState = BattleState.CHARSELECT;
+            //pathHandler.DisableWaypoints();
+            disabler.EnableControllers();
+            Debug.Log("Switching to CHARSELECT");
+            OnSwitchState.Invoke(true);
+        }
 
         //EVENTS
     }
 
     private void CharacterSelection() {
         //something here
-
-        if (activeActor != null) {
-            SwitchToPathSelect();
-        }
     }
 
-    private void UpdateActiveCharacter() {
-        activeActor = selector.getSelected();
-    }
-
-    public void SwitchToPathSelect() {
+    public void SwitchToPathSelect(CharacterActor actor) {
+        activeActor = actor;
         battleState = BattleState.PATHSELECT;
+        activeSkill = null;
         Debug.Log("Switching to PATHSELECT");
     }
 
@@ -134,19 +153,22 @@ public class BattleStateSystem : MonoBehaviour
         //TODO: Invoke OnActionUpdate
         if (Input.GetMouseButtonDown(0) && Input.GetKey(KeyCode.LeftShift)) {
             Vector3 waypoint = pathHandler.AddWaypoint(activeActor);
-            if (waypoint != Vector3.zero) {
+            if (waypoint != Vector3.zero && !activeActor.HasExistingMoveAction()) {
                 OnWaypointAdded?.Invoke(waypoint, activeActor);
             }
         } else if (Input.GetMouseButtonUp(1)) {
+            OnUndoAction?.Invoke();
             pathHandler.UndoWaypoint(activeActor);
         }
     }
 
     public void SwitchToSkillSelect(SkillObject skill) {
-        battleState = BattleState.SKILLSELECT;
-        activeSkill = new SkillAction(skill);
-        OnSkillSelected?.Invoke(activeSkill, activeActor);
-        Debug.Log("Switching to SKILLSELECT: " + skill.GetSkillName());
+        if (activeActor.HasAvailableActions()) {
+            battleState = BattleState.SKILLSELECT;
+            activeSkill = new SkillAction(skill, activeActor.transform);
+            OnSkillSelected?.Invoke(activeSkill, activeActor);
+            Debug.Log("Switching to SKILLSELECT: " + skill.GetSkillName());
+        }
     }
 
     private void SkillSelect() {
@@ -157,37 +179,57 @@ public class BattleStateSystem : MonoBehaviour
             OnSkillConfirm?.Invoke(true);
         }
 
-        if (Input.GetKeyDown(KeyCode.Escape)) {
+        if (Input.GetMouseButtonDown(1)) {
             activeSkill = null;
             SwitchToCharacterSelect();
-            OnSkillConfirm?.Invoke(true);
+            OnUndoAction?.Invoke();
         }
 
 
         if (Input.GetMouseButtonDown(0)) {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out RaycastHit hit, 100)) {
-                SwitchToPathSelect();
                 OnSkillConfirm?.Invoke(false);
                 activeSkill.StoreLocation(hit.point);
+                activeActor.AppendAction(activeSkill);
+                SwitchToPathSelect(activeActor);
             }
         }
     }
 
     public void SwitchToAnimate() {
-        activeActor = null;
+        //activeActor = null;
         battleState = BattleState.ANIMATE;
         //pathHandler.DisableWaypoints();
         disabler.DisableControllers();
+        OnSwitchState.Invoke(false);
+    }
+
+    private void Animate() {
+        if (activeAnimationCycle == null) {
+            activeAnimationCycle = AnimateBattle();
+            StartCoroutine(AnimateBattle());
+        }
     }
 
     private IEnumerator AnimateBattle() {
         //additional actions during animate state
-        animator.RunAllMoveSequences();
 
-        yield return new WaitForSeconds(animator.getDelay());
+        if (animationStep >= maxSteps) {
+            SwitchToCharacterSelect();
+        }
+        for (int i = 0; i <= animationStep; i++) {
+            CharacterActor actor = actorQueue[i];
+            if (actor.GetActionList().Count > 0) {
+                actor.RunNextAction(animationCycleDuration);
+            }
+        }
+        animationStep++;
 
-        SwitchToCharacterSelect();
+        yield return new WaitForSeconds(animationCycleDuration + 0.1f);
+
+        activeAnimationCycle = null;
+        yield return null;
     }
 
     #endregion Game States

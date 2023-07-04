@@ -1,4 +1,4 @@
- using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,7 +11,7 @@ public class SingleTargetProjectile : SkillObject
     [SerializeField] private float rawDamage = 10f;
 
     [Tooltip("The base travel speed of the projectile.")]
-    [SerializeField] private float baseSpeed = 1f;
+    [SerializeField] private float baseSpeed = 3f;
 
     [Tooltip("The duration of which the projectile will remain active. '0' means the projectile will never despawn (until it exits the map).")]
     [SerializeField] private float lifetime = 0f;
@@ -23,6 +23,9 @@ public class SingleTargetProjectile : SkillObject
     [Tooltip("A prefab of a LineRenderer that displays the direction and distance of a projectile.")]
     [SerializeField] private GameObject linePrefab;
 
+    [Tooltip("Prefab of a projectile that will display in game.")]
+    [SerializeField] private GameObject projectilePrefab;
+
     //CURSOR ACTIONS
     protected CursorType cursor = new ProjectileCursor();
 
@@ -31,5 +34,16 @@ public class SingleTargetProjectile : SkillObject
         display.EnableLine(linePrefab);
     }
 
+    public override void RunSkill(SkillAction action) {
+        Projectile projectile = Instantiate(projectilePrefab, action.Actor().position, Quaternion.identity).GetComponent<Projectile>();
+        projectile.Activate(action.GetLocation(), baseSpeed);
+    }
+
     //TODO: Section for Interactions, ActiveEffect, HitEffect, and EndEffect
+
+    public GameObject ProjectilePrefab() {
+        return projectilePrefab;
+    }
+
+    public float BaseSpeed() { return baseSpeed; }
 }
