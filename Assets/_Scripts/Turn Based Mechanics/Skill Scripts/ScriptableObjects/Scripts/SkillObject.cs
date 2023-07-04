@@ -29,6 +29,8 @@ public abstract class SkillObject : ScriptableObject {
 
     public abstract void InitSkillDisplay(ActionDisplay display);
 
+    public abstract void RunSkill(SkillAction action);
+
     public int GetSkillID() { return skillID; }
     public string GetSkillName() { return skillName; }
     public SkillType GetSkillType() { return skillType; }

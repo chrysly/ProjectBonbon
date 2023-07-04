@@ -17,7 +17,7 @@ public class CharacterPathHandler : MonoBehaviour
     }
 
     public Vector3 AddWaypoint(CharacterActor actor) {
-        if (actor.HasRemainingActionPoints()) {
+        if (actor.HasRemainingStamina()) {
             Debug.Log("Added");
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out RaycastHit hit, 100)) {
@@ -40,9 +40,9 @@ public class CharacterPathHandler : MonoBehaviour
             cursorPosition.y += 1;  //offset
             MoveAction waypoint = new();
             waypoint.StoreLocation(cursorPosition);
-            actor.AppendAction(waypoint);
 
             yield return new WaitForSecondsRealtime(waypointCreationDelay);
+            actor.AppendAction(waypoint);
 
             activeAction = null;
             yield return null;

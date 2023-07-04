@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class ActionDisplay : MonoBehaviour
 {
@@ -20,6 +21,8 @@ public class ActionDisplay : MonoBehaviour
     public void CreateMoveDisplay(GameObject cursorPrefab, Vector3 location) {
         location.y++;
         activeCursor = Instantiate(cursorPrefab, location, Quaternion.identity);
+        activeCursor.transform.DOScaleY(0, 0);
+        activeCursor.transform.DOScaleY(1, 0.5f);
     }
 
     public void RunDisplayPlacement(Transform actor) {
@@ -51,10 +54,8 @@ public class ActionDisplay : MonoBehaviour
     }
 
     public void WipeDisplay() {
-        isActive = false;
-        activeCursor = null;
-        ClearAll();
         DestroyAll();
+        ClearAll();
     }
 
     #region Boolean Logic
@@ -66,13 +67,14 @@ public class ActionDisplay : MonoBehaviour
 
     private void DestroyAll() {
         Destroy(activeCursor);
-        Destroy(line.gameObject);
+        if (showLine) Destroy(line.gameObject);
     }
 
     private void ClearAll() {  //MAKE SURE TO UPDATE WHEN ADDING NEW BOOLEANS
         line = null;
         isActive = false;
         showLine = false;
+        activeCursor = null;
     }
     #endregion
 

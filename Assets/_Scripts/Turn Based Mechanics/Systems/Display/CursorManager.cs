@@ -32,6 +32,8 @@ public class CursorManager : MonoBehaviour {
         battleStateSystem.OnSkillSelected += CreateSkillCursor;
         battleStateSystem.OnSkillConfirm += DisableSkillCursor;
         battleStateSystem.OnWaypointAdded += CreateMovePoint;
+        battleStateSystem.OnUndoAction += RemoveLastDisplay;
+        battleStateSystem.OnSwitchState += ClearAll;
     }
 
     public void CreateSkillCursor(SkillAction skill, CharacterActor actor) {
@@ -50,6 +52,13 @@ public class CursorManager : MonoBehaviour {
             actorDict[activeActor].RemoveLast();
         }
         isActive = false;
+    }
+
+    public void RemoveLastDisplay() {
+        if (actorDict[activeActor].Count > 0) {
+            actorDict[activeActor].Last.Value.WipeDisplay();
+            actorDict[activeActor].RemoveLast();
+        }
     }
 
     public void PlacementCursor() {
@@ -72,7 +81,16 @@ public class CursorManager : MonoBehaviour {
         activeActor = null;
         isActive = false;
         foreach (CharacterActor actor in actorList) {
+            foreach(ActionDisplay display in actorDict[actor]) {
+                display.WipeDisplay();
+            }
             actorDict[actor].Clear();
+        }
+    }
+
+    private void ClearAll(bool isEnabled) {
+        if (isEnabled == false) {
+            Clear();
         }
     }
 }

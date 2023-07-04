@@ -21,4 +21,8 @@ public class LineController : MonoBehaviour
             lineRenderer.SetPosition(i, points[i].position);
         }
     }
+
+    public void DestroyLine() {
+        Destroy(lineRenderer);
+    }
 }
