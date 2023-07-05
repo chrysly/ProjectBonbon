@@ -7,6 +7,7 @@ using Cinemachine;
 public class CameraController : MonoBehaviour {
     [SerializeField] private SelectManager selector;
 
+    [SerializeField] private CinemachineVirtualCamera orbitalCam;
     [SerializeField] private CinemachineVirtualCamera aerialCam;
     [SerializeField] private CinemachineVirtualCamera charCam;
 
@@ -17,9 +18,11 @@ public class CameraController : MonoBehaviour {
     public delegate void SwitchView(bool isAerial);
     public event SwitchView OnSwitchView;
 
+    private bool isAerial = false;
+
     private void Start() {
         charCam.gameObject.SetActive(true);
-        aerialCam.gameObject.SetActive(false);
+        //aerialCam.gameObject.SetActive(false);
         AerialUI.SetActive(false);
         RegisterEvents();
     }
@@ -38,35 +41,51 @@ public class CameraController : MonoBehaviour {
         }
 
         if (Input.GetKeyDown(KeyCode.Tab)) {
-            if (aerialCam.isActiveAndEnabled) {
-                charCam.gameObject.SetActive(true);
-                aerialCam.gameObject.SetActive(false);
+            if (isAerial) {
+                //charCam.gameObject.SetActive(true);
+                //aerialCam.gameObject.SetActive(false);
+                isAerial = false;
                 AerialUI.SetActive(false);
                 OnSwitchView.Invoke(false);
+                PrioritizeCamera(orbitalCam);
             } else {
                 /*if (focus != null) {
                     selector.setFadeOut(true);
                     FunctionTimer.Create(selector.deselectUI, .02f);
                     selector.StartCoroutine(selector.setSelected(null));
                 }*/
+                isAerial = true;
                 OnSwitchView.Invoke(true);
                 AerialUI.SetActive(true);
-                aerialCam.gameObject.SetActive(true);
-                charCam.gameObject.SetActive(false);
+                //aerialCam.gameObject.SetActive(true);
+                //charCam.gameObject.SetActive(false);
+                PrioritizeCamera(aerialCam);
             }
         }
     }
 
     private void FocusCamera(CharacterActor actor) {
         focus = actor.transform;
+        PrioritizeCamera(charCam);
     }
     
     private void ClearFocus() {
         focus = null;
+        if (!isAerial) {
+            PrioritizeCamera(orbitalCam);
+        }
         Debug.Log("focus cleared");
     }
     
     public bool getIsCharCam() {
         return charCam.isActiveAndEnabled;
+    }
+
+    public void PrioritizeCamera(CinemachineVirtualCamera camera) {
+        orbitalCam.Priority = 0;
+        aerialCam.Priority = 0;
+        charCam.Priority = 0;
+
+        camera.Priority = 1;
     }
 }
