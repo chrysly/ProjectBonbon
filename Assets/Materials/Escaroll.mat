@@ -58,7 +58,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: f2d040e57ead1444ab56aa694db3606f, type: 3}
+        m_Texture: {fileID: 2800000, guid: 145ebc3a59051554784e1268ff95178d, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -71,6 +71,10 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _ParallaxMap:
         m_Texture: {fileID: 2800000, guid: 12790ff4a80733042b5e048255ee505d, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_67bd678791984c8189840b4898698364_Texture_1:
+        m_Texture: {fileID: 2800000, guid: 8ed76b598c5d58f46b361e91a8fbe9e2, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SpecGlossMap:
@@ -93,7 +97,7 @@ Material:
     m_Floats:
     - _AlphaClip: 0
     - _Blend: 0
-    - _Brightness: 2.06
+    - _Brightness: 1.79
     - _BumpScale: 1
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
@@ -104,11 +108,13 @@ Material:
     - _DstBlend: 0
     - _EnvironmentReflections: 1
     - _GlossMapScale: 0.682
-    - _Glossiness: 25.9
+    - _Glossiness: -10
     - _GlossyReflections: 1
     - _Metallic: 0
     - _Mode: 0
+    - _Noise_Scale: 70
     - _OcclusionStrength: 1
+    - _Outline_Thickness: 0
     - _Parallax: 0.0097
     - _QueueControl: 0
     - _QueueOffset: 0
@@ -116,8 +122,9 @@ Material:
     - _ReceiveShadows: 1
     - _RimAmount: 0.716
     - _RimThreshold: 0.1
-    - _Rim_Amount: 0.53
-    - _Rim_Threshold: 0.134
+    - _Rim_Amount: 0.772
+    - _Rim_Intensity: 1.91
+    - _Rim_Threshold: 0
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
@@ -125,16 +132,17 @@ Material:
     - _SrcBlend: 1
     - _Surface: 0
     - _ToonAmt: 0
-    - _Toon_Amount: 0.19
+    - _Toon_Amount: 0
     - _UVSec: 0
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
     - _AmbientColor: {r: 0.4, g: 0.4, b: 0.4, a: 1}
-    - _Ambient_Color: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    - _Ambient_Color: {r: 0.4339623, g: 0.4339623, b: 0.4339623, a: 1}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Color: {r: 0.8773585, g: 0.8773585, b: 0.8773585, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _Outline_Color: {r: 0, g: 0, b: 0, a: 1}
     - _RimColor: {r: 1, g: 1, b: 1, a: 1}
     - _Rim_Color: {r: 1, g: 1, b: 1, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
