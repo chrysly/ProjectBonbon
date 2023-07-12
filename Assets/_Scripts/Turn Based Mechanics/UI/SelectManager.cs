@@ -45,6 +45,7 @@ public class SelectManager : MonoBehaviour {
     private void EnableSelect(bool isEnabled) {
         isActive = isEnabled;
         if (!isEnabled) {
+            selectedActor = null;
             OnDeselect.Invoke();
         }
     }

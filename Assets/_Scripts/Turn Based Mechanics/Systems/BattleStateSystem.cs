@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum BattleState { START, CHARSELECT, PATHSELECT, SKILLSELECT, ANIMATE, WIN, LOSE }
+public enum BattleState { START, CHARSELECT, PATHSELECT, SKILLSELECT, BAKE, ANIMATE, WIN, LOSE }
 
 public class BattleStateSystem : MonoBehaviour
 {
@@ -26,6 +26,7 @@ public class BattleStateSystem : MonoBehaviour
     private List<CharacterActor> actorQueue;
 
     [SerializeField] private float animationCycleDuration = 0.5f;
+    private bool isAnimating = false;
 
     #endregion Battle Actors
 
@@ -50,6 +51,9 @@ public class BattleStateSystem : MonoBehaviour
 
     public delegate void Selection(bool enable);
     public event Selection OnSwitchState;
+
+    public delegate void IsBaking();
+    public event IsBaking OnBake;
     #endregion Events
 
     private SkillAction activeSkill;
@@ -59,7 +63,6 @@ public class BattleStateSystem : MonoBehaviour
     {
         battleState = BattleState.START;
         selector.OnSelect += SwitchToPathSelect;
-        selector.OnDeselect += SwitchToCharacterSelect;
         StartCoroutine(InitializeBattle());
     }
 
@@ -82,6 +85,9 @@ public class BattleStateSystem : MonoBehaviour
                 break;
             case BattleState.SKILLSELECT:
                 SkillSelect();
+                break;
+            case BattleState.BAKE:
+                Bake();
                 break;
             case BattleState.ANIMATE:
                 Animate();
@@ -108,6 +114,7 @@ public class BattleStateSystem : MonoBehaviour
     #region Game States
     private void SwitchToStart() {
         battleState = BattleState.START;
+        selector.OnDeselect += SwitchToCharacterSelect;
         Debug.Log("Switching to START");
     }
 
@@ -121,7 +128,7 @@ public class BattleStateSystem : MonoBehaviour
     }
 
     public void SwitchToCharacterSelect() {
-        if (battleState != BattleState.ANIMATE) {
+        if (!isAnimating) {
             battleState = BattleState.CHARSELECT;
             //pathHandler.DisableWaypoints();
             disabler.EnableControllers();
@@ -197,9 +204,23 @@ public class BattleStateSystem : MonoBehaviour
         }
     }
 
+    public void SwitchToBake(Ingredient ingredient) {
+        if (activeActor.HasAvailableActions()) {
+            battleState = BattleState.BAKE;
+        }
+    }
+
+    private void Bake() {
+
+    }
+
     public void SwitchToAnimate() {
         //activeActor = null;
+        selector.OnDeselect -= SwitchToCharacterSelect;
+        activeActor = null;
+        activeSkill = null;
         battleState = BattleState.ANIMATE;
+        animationStep = 0;
         //pathHandler.DisableWaypoints();
         disabler.DisableControllers();
         OnSwitchState.Invoke(false);
@@ -215,14 +236,22 @@ public class BattleStateSystem : MonoBehaviour
     private IEnumerator AnimateBattle() {
         //additional actions during animate state
 
-        if (animationStep >= maxSteps) {
+        if (animationStep > maxSteps) {
+            isAnimating = false;
+            animationStep = 0;
+            selector.OnDeselect += SwitchToCharacterSelect;
             SwitchToCharacterSelect();
         }
-        for (int i = 0; i <= animationStep; i++) {
-            CharacterActor actor = actorQueue[i];
-            if (actor.GetActionList().Count > 0) {
-                actor.RunNextAction(animationCycleDuration);
+
+        if (animationStep > 0) {
+            CharacterActor prevActor = actorQueue[animationStep - 1];
+            if (prevActor.GetActionList().Count > 0) {
+                prevActor.RunNextAction(animationCycleDuration);
             }
+        }
+        CharacterActor currActor = actorQueue[animationStep];
+        if (currActor.GetActionList().Count > 0) {
+            currActor.RunNextAction(animationCycleDuration);
         }
         animationStep++;
 

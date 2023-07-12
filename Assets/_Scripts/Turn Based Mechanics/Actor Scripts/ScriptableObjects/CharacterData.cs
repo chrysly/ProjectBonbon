@@ -44,6 +44,9 @@ public class CharacterData : ScriptableObject {
     [Tooltip("Pool of skills that character is able to learn.")]
     [SerializeField] private List<SkillObject> skillList;
 
+    [Tooltip("Pool of ingredients the character has access to")]
+    [SerializeField] private List<Ingredient> ingredientList;
+
     //TODO: List of Recipes/Ingredients
 
     #region Getters
@@ -58,5 +61,6 @@ public class CharacterData : ScriptableObject {
     public int MaxActions() { return maxActions; }
     public float MaxDistance() { return maxDistance; }
     public List<SkillObject> SkillList() { return skillList; }
+    public List<Ingredient> IngredientList() { return ingredientList; }
     #endregion Getters
 }
