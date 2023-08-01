@@ -721,39 +721,7 @@
             },
             "m_InputSlot": {
                 "m_Node": {
-<<<<<<<< Updated upstream:Assets/Shaders/Toon Shader.shadersubgraph
                     "m_Id": "2e103027be444bcbbfdb6c10026b95f9"
-========
-                    "m_Id": "727c5ee6cf744c64a749929c43100137"
-                },
-                "m_SlotId": 0
-            }
-        },
-        {
-            "m_OutputSlot": {
-                "m_Node": {
-                    "m_Id": "a67fe1f40b354055bced5b78964b76af"
-                },
-                "m_SlotId": 2
-            },
-            "m_InputSlot": {
-                "m_Node": {
-                    "m_Id": "ec10d10ec7574cfea503e071e5d3bddb"
-                },
-                "m_SlotId": 0
-            }
-        },
-        {
-            "m_OutputSlot": {
-                "m_Node": {
-                    "m_Id": "a6a0e79ad2b34ab99f0e382c1b70bec1"
-                },
-                "m_SlotId": 0
-            },
-            "m_InputSlot": {
-                "m_Node": {
-                    "m_Id": "128f8bfa22404113be6595699f823a77"
->>>>>>>> Stashed changes:Assets/Shaders/Entity Toon Shader.shadersubgraph
                 },
                 "m_SlotId": 0
             }
@@ -2177,52 +2145,6 @@
 
 {
     "m_SGVersion": 0,
-<<<<<<<< Updated upstream:Assets/Shaders/Toon Shader.shadersubgraph
-========
-    "m_Type": "UnityEditor.ShaderGraph.ClampNode",
-    "m_ObjectId": "38337376b9b54cc9868f3dbabf976f78",
-    "m_Group": {
-        "m_Id": ""
-    },
-    "m_Name": "Clamp",
-    "m_DrawState": {
-        "m_Expanded": true,
-        "m_Position": {
-            "serializedVersion": "2",
-            "x": 1195.0,
-            "y": -750.0,
-            "width": 140.0,
-            "height": 142.0
-        }
-    },
-    "m_Slots": [
-        {
-            "m_Id": "0ee61e7643c940faa963f31d08341fb3"
-        },
-        {
-            "m_Id": "903b39a4a723478e8e59350a8457e9e7"
-        },
-        {
-            "m_Id": "d3d0901d508645d9b9c286ba28440122"
-        },
-        {
-            "m_Id": "7d7f6a2c83be48859c7d192d45612a8f"
-        }
-    ],
-    "synonyms": [
-        "limit"
-    ],
-    "m_Precision": 0,
-    "m_PreviewExpanded": false,
-    "m_PreviewMode": 0,
-    "m_CustomColors": {
-        "m_SerializableColors": []
-    }
-}
-
-{
-    "m_SGVersion": 0,
->>>>>>>> Stashed changes:Assets/Shaders/Entity Toon Shader.shadersubgraph
     "m_Type": "UnityEditor.ShaderGraph.DynamicVectorMaterialSlot",
     "m_ObjectId": "3891ae0a597d41e5ac17c06d8d24af14",
     "m_Id": 0,
@@ -2746,72 +2668,6 @@
 
 {
     "m_SGVersion": 0,
-<<<<<<<< Updated upstream:Assets/Shaders/Toon Shader.shadersubgraph
-========
-    "m_Type": "UnityEditor.ShaderGraph.BlendNode",
-    "m_ObjectId": "45a1d49272d54ff9ad520fa07d675c8f",
-    "m_Group": {
-        "m_Id": ""
-    },
-    "m_Name": "Blend",
-    "m_DrawState": {
-        "m_Expanded": true,
-        "m_Position": {
-            "serializedVersion": "2",
-            "x": 1006.0,
-            "y": -925.0,
-            "width": 161.0,
-            "height": 177.00006103515626
-        }
-    },
-    "m_Slots": [
-        {
-            "m_Id": "884dc1c30da649f997b5bcb0a4290f90"
-        },
-        {
-            "m_Id": "e712b0e1d11c49c2a6e8402ff9068cf7"
-        },
-        {
-            "m_Id": "ab73ab6ebe234e079845ad9cbc06ebe7"
-        },
-        {
-            "m_Id": "e9f3549e7d8549968010110b69b20e20"
-        }
-    ],
-    "synonyms": [
-        "burn",
-        "darken",
-        "difference",
-        "dodge",
-        "divide",
-        "exclusion",
-        "hard light",
-        "hard mix",
-        "linear burn",
-        "linear dodge",
-        "linear light",
-        "multiply",
-        "negate",
-        "overlay",
-        "pin light",
-        "screen",
-        "soft light",
-        "subtract",
-        "vivid light",
-        "overwrite"
-    ],
-    "m_Precision": 0,
-    "m_PreviewExpanded": false,
-    "m_PreviewMode": 0,
-    "m_CustomColors": {
-        "m_SerializableColors": []
-    },
-    "m_BlendMode": 17
-}
-
-{
-    "m_SGVersion": 0,
->>>>>>>> Stashed changes:Assets/Shaders/Entity Toon Shader.shadersubgraph
     "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
     "m_ObjectId": "45b7629403dd47518d1966a86aaeb3f2",
     "m_Id": 0,
@@ -4581,97 +4437,6 @@
 
 {
     "m_SGVersion": 0,
-<<<<<<<< Updated upstream:Assets/Shaders/Toon Shader.shadersubgraph
-========
-    "m_Type": "UnityEditor.ShaderGraph.DynamicVectorMaterialSlot",
-    "m_ObjectId": "8e261a9181c04eff80e5a1804535d283",
-    "m_Id": 0,
-    "m_DisplayName": "A",
-    "m_SlotType": 0,
-    "m_Hidden": false,
-    "m_ShaderOutputName": "A",
-    "m_StageCapability": 3,
-    "m_Value": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0,
-        "w": 0.0
-    },
-    "m_DefaultValue": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0,
-        "w": 0.0
-    }
-}
-
-{
-    "m_SGVersion": 0,
-    "m_Type": "UnityEditor.ShaderGraph.DynamicVectorMaterialSlot",
-    "m_ObjectId": "8ed3cdf05ab04321afebcbe1723f5bd3",
-    "m_Id": 2,
-    "m_DisplayName": "False",
-    "m_SlotType": 0,
-    "m_Hidden": false,
-    "m_ShaderOutputName": "False",
-    "m_StageCapability": 3,
-    "m_Value": {
-        "x": 1.0,
-        "y": 0.0,
-        "z": 0.0,
-        "w": 0.0
-    },
-    "m_DefaultValue": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0,
-        "w": 0.0
-    }
-}
-
-{
-    "m_SGVersion": 0,
-    "m_Type": "UnityEditor.ShaderGraph.NoiseNode",
-    "m_ObjectId": "8efdc7738c0142d0ae13fdedbf2a8d49",
-    "m_Group": {
-        "m_Id": ""
-    },
-    "m_Name": "Simple Noise",
-    "m_DrawState": {
-        "m_Expanded": true,
-        "m_Position": {
-            "serializedVersion": "2",
-            "x": 908.0,
-            "y": -704.9999389648438,
-            "width": 147.0,
-            "height": 118.0
-        }
-    },
-    "m_Slots": [
-        {
-            "m_Id": "fb19547f1d254bdc82b49409c5f33208"
-        },
-        {
-            "m_Id": "dc0798998f194a6d81b78ca229f2f314"
-        },
-        {
-            "m_Id": "0d17e21ffc65409cb9418a83491dc84a"
-        }
-    ],
-    "synonyms": [
-        "value noise"
-    ],
-    "m_Precision": 0,
-    "m_PreviewExpanded": false,
-    "m_PreviewMode": 0,
-    "m_CustomColors": {
-        "m_SerializableColors": []
-    }
-}
-
-{
-    "m_SGVersion": 0,
->>>>>>>> Stashed changes:Assets/Shaders/Entity Toon Shader.shadersubgraph
     "m_Type": "UnityEditor.ShaderGraph.SubtractNode",
     "m_ObjectId": "8f08f179f4174e58901cf69785b8608a",
     "m_Group": {
@@ -6140,44 +5905,6 @@
 
 {
     "m_SGVersion": 0,
-<<<<<<<< Updated upstream:Assets/Shaders/Toon Shader.shadersubgraph
-========
-    "m_Type": "UnityEditor.ShaderGraph.PropertyNode",
-    "m_ObjectId": "cead12c8c0634cebb83d9c511d3269fe",
-    "m_Group": {
-        "m_Id": ""
-    },
-    "m_Name": "Property",
-    "m_DrawState": {
-        "m_Expanded": true,
-        "m_Position": {
-            "serializedVersion": "2",
-            "x": 1103.0,
-            "y": -1027.0001220703125,
-            "width": 129.0,
-            "height": 34.00006103515625
-        }
-    },
-    "m_Slots": [
-        {
-            "m_Id": "4277dc7ab83a47778349a9e668715740"
-        }
-    ],
-    "synonyms": [],
-    "m_Precision": 0,
-    "m_PreviewExpanded": true,
-    "m_PreviewMode": 0,
-    "m_CustomColors": {
-        "m_SerializableColors": []
-    },
-    "m_Property": {
-        "m_Id": "01187ff805014cbe9de209b166e664d5"
-    }
-}
-
-{
-    "m_SGVersion": 0,
->>>>>>>> Stashed changes:Assets/Shaders/Entity Toon Shader.shadersubgraph
     "m_Type": "UnityEditor.ShaderGraph.DynamicVectorMaterialSlot",
     "m_ObjectId": "cf3cfc19a9234facb2264971f69b85e4",
     "m_Id": 1,
@@ -6541,7 +6268,7 @@
     "m_SlotType": 0,
     "m_Hidden": false,
     "m_ShaderOutputName": "OutVector3",
-    "m_StageCapability": 3,
+    "m_StageCapability": 2,
     "m_Value": {
         "x": 0.0,
         "y": 0.0,
@@ -6557,123 +6284,6 @@
 
 {
     "m_SGVersion": 0,
-<<<<<<<< Updated upstream:Assets/Shaders/Toon Shader.shadersubgraph
-========
-    "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
-    "m_ObjectId": "dc0798998f194a6d81b78ca229f2f314",
-    "m_Id": 1,
-    "m_DisplayName": "Scale",
-    "m_SlotType": 0,
-    "m_Hidden": false,
-    "m_ShaderOutputName": "Scale",
-    "m_StageCapability": 3,
-    "m_Value": 70.80000305175781,
-    "m_DefaultValue": 500.0,
-    "m_Labels": []
-}
-
-{
-    "m_SGVersion": 1,
-    "m_Type": "UnityEditor.ShaderGraph.ColorNode",
-    "m_ObjectId": "ddeada710c9345d5af0c1f377be9eb97",
-    "m_Group": {
-        "m_Id": ""
-    },
-    "m_Name": "Color",
-    "m_DrawState": {
-        "m_Expanded": true,
-        "m_Position": {
-            "serializedVersion": "2",
-            "x": 700.0000610351563,
-            "y": -964.0,
-            "width": 207.99993896484376,
-            "height": 127.0
-        }
-    },
-    "m_Slots": [
-        {
-            "m_Id": "723ddc0bd5704d3fa62b9dc6bc503d63"
-        }
-    ],
-    "synonyms": [
-        "rgba"
-    ],
-    "m_Precision": 0,
-    "m_PreviewExpanded": true,
-    "m_PreviewMode": 0,
-    "m_CustomColors": {
-        "m_SerializableColors": []
-    },
-    "m_Color": {
-        "color": {
-            "r": 0.5113474130630493,
-            "g": 0.9080000519752502,
-            "b": 0.42054739594459536,
-            "a": 1.0
-        },
-        "mode": 0
-    }
-}
-
-{
-    "m_SGVersion": 0,
-    "m_Type": "UnityEditor.ShaderGraph.SampleTexture2DNode",
-    "m_ObjectId": "dea8640fdca14ae1a672c49cf3b83aff",
-    "m_Group": {
-        "m_Id": ""
-    },
-    "m_Name": "Sample Texture 2D",
-    "m_DrawState": {
-        "m_Expanded": true,
-        "m_Position": {
-            "serializedVersion": "2",
-            "x": 1358.0,
-            "y": -1050.0001220703125,
-            "width": 183.0001220703125,
-            "height": 251.00006103515626
-        }
-    },
-    "m_Slots": [
-        {
-            "m_Id": "68c50cfb68db4d92b1e976d912b371f9"
-        },
-        {
-            "m_Id": "420a5e6a8808499baafd6f8c2ea3569d"
-        },
-        {
-            "m_Id": "f0c6b9138e8a41f49c143405321232f9"
-        },
-        {
-            "m_Id": "935a5d06c7e445d88b3701fd9f75927e"
-        },
-        {
-            "m_Id": "a166b9758c794acda20f6841ed197b68"
-        },
-        {
-            "m_Id": "56112c33369a48b5b2efd629c4d314b9"
-        },
-        {
-            "m_Id": "b9ef63115d6840848161fbac82237362"
-        },
-        {
-            "m_Id": "ab3ce2ddb8b14735a3968531ae349a91"
-        }
-    ],
-    "synonyms": [],
-    "m_Precision": 0,
-    "m_PreviewExpanded": false,
-    "m_PreviewMode": 0,
-    "m_CustomColors": {
-        "m_SerializableColors": []
-    },
-    "m_TextureType": 0,
-    "m_NormalMapSpace": 0,
-    "m_EnableGlobalMipBias": true
-}
-
-{
-    "m_SGVersion": 0,
->>>>>>>> Stashed changes:Assets/Shaders/Entity Toon Shader.shadersubgraph
     "m_Type": "UnityEditor.ShaderGraph.SubGraphOutputNode",
     "m_ObjectId": "df06226a05a24ba68fd664a31779c071",
     "m_Group": {
@@ -6941,72 +6551,6 @@
 
 {
     "m_SGVersion": 0,
-<<<<<<<< Updated upstream:Assets/Shaders/Toon Shader.shadersubgraph
-========
-    "m_Type": "UnityEditor.ShaderGraph.BlendNode",
-    "m_ObjectId": "e875016f48024b54af0b0f3a2759165d",
-    "m_Group": {
-        "m_Id": ""
-    },
-    "m_Name": "Blend",
-    "m_DrawState": {
-        "m_Expanded": true,
-        "m_Position": {
-            "serializedVersion": "2",
-            "x": 1497.0,
-            "y": -704.9999389648438,
-            "width": 161.0001220703125,
-            "height": 176.99993896484376
-        }
-    },
-    "m_Slots": [
-        {
-            "m_Id": "4d1fdd96f09942e5a3188dd632f68d43"
-        },
-        {
-            "m_Id": "c1f47adc666044518f3264d9802fe9aa"
-        },
-        {
-            "m_Id": "8c939924c0f046b1ad1ed8503c99a9ff"
-        },
-        {
-            "m_Id": "a6f4c645e41c42339b6e3e594f855218"
-        }
-    ],
-    "synonyms": [
-        "burn",
-        "darken",
-        "difference",
-        "dodge",
-        "divide",
-        "exclusion",
-        "hard light",
-        "hard mix",
-        "linear burn",
-        "linear dodge",
-        "linear light",
-        "multiply",
-        "negate",
-        "overlay",
-        "pin light",
-        "screen",
-        "soft light",
-        "subtract",
-        "vivid light",
-        "overwrite"
-    ],
-    "m_Precision": 0,
-    "m_PreviewExpanded": false,
-    "m_PreviewMode": 0,
-    "m_CustomColors": {
-        "m_SerializableColors": []
-    },
-    "m_BlendMode": 17
-}
-
-{
-    "m_SGVersion": 0,
->>>>>>>> Stashed changes:Assets/Shaders/Entity Toon Shader.shadersubgraph
     "m_Type": "UnityEditor.ShaderGraph.DynamicVectorMaterialSlot",
     "m_ObjectId": "e8f0e785db6f48a986dcf385c7a73727",
     "m_Id": 2,

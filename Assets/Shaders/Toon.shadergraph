@@ -92,12 +92,6 @@
         },
         {
             "m_Id": "c631c2a85a06496e9062d2401dfd48ca"
-<<<<<<<< Updated upstream:Assets/Shaders/Toon.shadergraph
-========
-        },
-        {
-            "m_Id": "090b80815cd44a61bf7fb851f6782b7e"
->>>>>>>> Stashed changes:Assets/Shaders/Entity Toon.shadergraph
         }
     ],
     "m_GroupDatas": [],
@@ -536,7 +530,7 @@
     "m_SlotType": 0,
     "m_Hidden": false,
     "m_ShaderOutputName": "_WorldSpaceLightPos0",
-    "m_StageCapability": 3,
+    "m_StageCapability": 2,
     "m_Value": {
         "x": 0.0,
         "y": 0.0,
@@ -596,7 +590,7 @@
     "m_SlotType": 0,
     "m_Hidden": false,
     "m_ShaderOutputName": "_Color",
-    "m_StageCapability": 3,
+    "m_StageCapability": 2,
     "m_Value": {
         "x": 0.0,
         "y": 0.0,
@@ -621,7 +615,7 @@
     "m_SlotType": 0,
     "m_Hidden": false,
     "m_ShaderOutputName": "_Brightness",
-    "m_StageCapability": 3,
+    "m_StageCapability": 2,
     "m_Value": 0.0,
     "m_DefaultValue": 0.0,
     "m_Labels": []
@@ -1040,7 +1034,7 @@
     "m_SlotType": 0,
     "m_Hidden": false,
     "m_ShaderOutputName": "_Toon_Amount",
-    "m_StageCapability": 3,
+    "m_StageCapability": 2,
     "m_Value": 0.0,
     "m_DefaultValue": 0.0,
     "m_Labels": []
@@ -1055,7 +1049,7 @@
     "m_SlotType": 0,
     "m_Hidden": false,
     "m_ShaderOutputName": "_Rim_Threshold",
-    "m_StageCapability": 3,
+    "m_StageCapability": 2,
     "m_Value": 0.0,
     "m_DefaultValue": 0.0,
     "m_Labels": []
@@ -1089,7 +1083,7 @@
     "m_SlotType": 0,
     "m_Hidden": false,
     "m_ShaderOutputName": "_Rim_Amount",
-    "m_StageCapability": 3,
+    "m_StageCapability": 2,
     "m_Value": 0.0,
     "m_DefaultValue": 0.0,
     "m_Labels": []
@@ -1157,7 +1151,6 @@
 
 {
     "m_SGVersion": 0,
-<<<<<<<< Updated upstream:Assets/Shaders/Toon.shadergraph
     "m_Type": "UnityEditor.ShaderGraph.Vector4MaterialSlot",
     "m_ObjectId": "a213c1665b384d1f8e140bf844c32f92",
     "m_Id": 0,
@@ -1183,8 +1176,6 @@
 
 {
     "m_SGVersion": 0,
-========
->>>>>>>> Stashed changes:Assets/Shaders/Entity Toon.shadergraph
     "m_Type": "UnityEditor.ShaderGraph.PropertyNode",
     "m_ObjectId": "bf4274f289034f9db1c4772f9b3ebf3a",
     "m_Group": {
@@ -1260,7 +1251,7 @@
     "m_SlotType": 0,
     "m_Hidden": false,
     "m_ShaderOutputName": "_Glossiness",
-    "m_StageCapability": 3,
+    "m_StageCapability": 2,
     "m_Value": 0.0,
     "m_DefaultValue": 0.0,
     "m_Labels": []
@@ -1306,7 +1297,7 @@
     "m_Group": {
         "m_Id": ""
     },
-    "m_Name": "Entity Toon Shader",
+    "m_Name": "Toon Shader",
     "m_DrawState": {
         "m_Expanded": true,
         "m_Position": {
@@ -1437,7 +1428,7 @@
     "m_SlotType": 0,
     "m_Hidden": false,
     "m_ShaderOutputName": "_Specular_Color",
-    "m_StageCapability": 3,
+    "m_StageCapability": 2,
     "m_Value": {
         "x": 0.0,
         "y": 0.0,
@@ -1641,34 +1632,6 @@
 
 {
     "m_SGVersion": 0,
-<<<<<<<< Updated upstream:Assets/Shaders/Toon.shadergraph
-========
-    "m_Type": "UnityEditor.ShaderGraph.Vector4MaterialSlot",
-    "m_ObjectId": "eb4b644aeac4447cbb3fb9be9ebc5cb4",
-    "m_Id": -2045180565,
-    "m_DisplayName": "Rim Color",
-    "m_SlotType": 0,
-    "m_Hidden": false,
-    "m_ShaderOutputName": "_Rim_Color",
-    "m_StageCapability": 3,
-    "m_Value": {
-        "x": 1.0,
-        "y": 1.0,
-        "z": 1.0,
-        "w": 0.0
-    },
-    "m_DefaultValue": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0,
-        "w": 0.0
-    },
-    "m_Labels": []
-}
-
-{
-    "m_SGVersion": 0,
->>>>>>>> Stashed changes:Assets/Shaders/Entity Toon.shadergraph
     "m_Type": "UnityEditor.ShaderGraph.Texture2DInputMaterialSlot",
     "m_ObjectId": "f11ca53004474cc1b5347535a022e734",
     "m_Id": -1721505995,
@@ -1694,7 +1657,7 @@
     "m_SlotType": 0,
     "m_Hidden": false,
     "m_ShaderOutputName": "_Ambient_Color",
-    "m_StageCapability": 3,
+    "m_StageCapability": 2,
     "m_Value": {
         "x": 0.0,
         "y": 0.0,
@@ -1852,7 +1815,7 @@
     "m_SlotType": 1,
     "m_Hidden": false,
     "m_ShaderOutputName": "OutVector3",
-    "m_StageCapability": 3,
+    "m_StageCapability": 2,
     "m_Value": {
         "x": 0.0,
         "y": 0.0,
