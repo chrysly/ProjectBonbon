@@ -93,7 +93,11 @@ Material:
     m_Floats:
     - _AlphaClip: 0
     - _Blend: 0
+<<<<<<< Updated upstream
     - _Brightness: 2.06
+=======
+    - _Brightness: 2.82
+>>>>>>> Stashed changes
     - _BumpScale: 1
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
@@ -116,8 +120,14 @@ Material:
     - _ReceiveShadows: 1
     - _RimAmount: 0.716
     - _RimThreshold: 0.1
+<<<<<<< Updated upstream
     - _Rim_Amount: 0.53
     - _Rim_Threshold: 0.134
+=======
+    - _Rim_Amount: 0.468
+    - _Rim_Intensity: 1.91
+    - _Rim_Threshold: 0.14
+>>>>>>> Stashed changes
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
