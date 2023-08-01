@@ -1,24 +1,20 @@
-Shader "Unlit/FirstShader" {
+Shader "Unlit/VertexOffset" {
     Properties{    //input data
         //_MainTex ("Texture", 2D) = "white" {}
         _ColorA ("Color A", Color) = (1, 1, 1, 1)
         _ColorB ("Color B", Color) = (1, 1, 1, 1)
         _ColorStart ("Color Start", Range(0,1) ) = 0
         _ColorEnd ("Color End", Range(0,1) ) = 1
+        _WaveAmp ("Wave Amplitude", Range(0, 0.2)) = 0.1
     }
     SubShader {
         Tags { 
-            "RenderType"="Transparent"  //tag to inform the render pipeline of what type this is
-            "Queue"="Transparent"       //changes the render order
+            "RenderType"="Opaque"  //tag to inform the render pipeline of what type this is
         }  //how stuff renders in the pipeline
         //LOD 100                       //picks different subshaders based on LOD, rarely used?
 
         Pass {                          //explicit rendering for this pass itself, graphics
-
-            Cull Off
-            ZWrite Off
-            ZTest LEqual
-            Blend One One               //additive
+          //additive
             //Blend DstColor Zero
 
             CGPROGRAM
@@ -38,6 +34,7 @@ Shader "Unlit/FirstShader" {
 
             float _ColorStart;
             float _ColorEnd;
+            float _WaveAmp;
             //float _Scale;
             //float _Offset
 
@@ -62,8 +59,22 @@ Shader "Unlit/FirstShader" {
                 //float2 justSomeValues : TEXCOORD2; 
             };
 
+            float GetWave(float2 uv) {
+                float2 uvsCentered = uv * 2 - 1;
+                float radialDistance = length(uvsCentered);
+                float t = cos((radialDistance - _Time.y * 0.1) * TAU * 5);
+                t *= 1 - radialDistance;
+                return t;
+            }
+
             Interpolator vert (MeshData v) {
                 Interpolator o;
+
+                //float wave1 = cos((v.uv0.y - _Time.y * 0.1) * TAU * 5);
+                //float wave2 = cos((v.uv0.x - _Time.y * 0.1) * TAU * 5);
+                //v.vertex.y = wave1 * wave2 * _WaveAmp;
+                v.vertex.y = GetWave( v.uv0 ) * _WaveAmp;
+
                 o.vertex = UnityObjectToClipPos(v.vertex);  //multiply by model view project matrix, converts local space to clip space
                 //o.uv = TRANSFORM_TEX(v.uv, _MainTex);
                 //UNITY_TRANSFER_FOG(o,o.vertex);
@@ -77,7 +88,6 @@ Shader "Unlit/FirstShader" {
                 return (v - a) / (b - a);
             }
 
-
             //float4 = Vector4 (R, G, B, ALPHA?)
             //float (32 bit float), works for anything in world space
             //half (16 bit float), useful for most <<
@@ -90,18 +100,14 @@ Shader "Unlit/FirstShader" {
                 // apply fog
                 //UNITY_APPLY_FOG(i.fogCoord, col);
                 //float t = saturate(InverseLerp( _ColorStart, _ColorEnd, i.uv.x));
-                float xOffset = cos( i.uv.x * TAU * 8) * 0.01;
-                float t = cos((i.uv.y + xOffset - _Time.y * 0.1) * TAU * 5) * 0.5 + 0.5;
-                t *= 1 - i.uv.y;
-
-                float topBottomRemover = (abs(i.normal.y) < 0.999);
-                float waves = t * topBottomRemover;
-
-                float4 gradient = lerp(_ColorA, _ColorB, i.uv.y);
-                return gradient * waves;
+                
                 //t = frac(t);
                 //float4 outColor = lerp( _ColorA, _ColorB, t);  //blend between two colors
-
+                float2 uvsCentered = i.uv * 2 - 1;
+                float radialDistance = length(uvsCentered);
+                float t = cos((radialDistance - _Time.y * 0.1) * TAU * 5) * 0.5 + 0.5;
+                t *= 1 - radialDistance;
+                return t;
                 //return outColor;
             }
             ENDCG
